@@ -26,3 +26,14 @@ def get_media(thread_url: str):
         ext = name[-1]
         name = name[0]
         yield url, name, ext
+
+
+def thread_name(thread_url: str) -> str:
+    response = requests.get(thread_url)
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    subject = soup.find("span", attrs={"class": "subject"})
+    if subject.text:
+        return subject.text
+    else:
+        return thread_url.split("/")[-1]
