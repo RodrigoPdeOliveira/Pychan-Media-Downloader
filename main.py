@@ -9,12 +9,11 @@ parser.add_argument(
 )
 # TODO: Download image only or video only mode
 # TODO: Download from url in txt file
-# TODO: Download each thread in separate dirs
 
 args = parser.parse_args()
 
 url = args.url
-download_dir = args.output
+download_dir = args.output + f"/{helpers.thread_name(url)}"
 
 helpers.check_dir(download_dir)
 
