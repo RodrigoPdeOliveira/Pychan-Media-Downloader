@@ -8,7 +8,7 @@ def check_dir(dir_path: str):
         os.makedirs(dir_path)
 
 
-def download(url: str, name: str, ext: str, download_dir: str):
+def download_media(url: str, name: str, ext: str, download_dir: str):
     download_path = os.path.join(download_dir, f"{name}.{ext}")
     response = requests.get(url, allow_redirects=True)
     with open(download_path, "wb") as f:
@@ -33,6 +33,7 @@ def thread_name(thread_url: str) -> str:
     soup = BeautifulSoup(response.text, "html.parser")
 
     subject = soup.find("span", attrs={"class": "subject"})
+
     if subject.text:
         return subject.text
     else:
