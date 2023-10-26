@@ -36,9 +36,9 @@ def download(url: str, download_dir: str):
 
     helpers.check_dir(download_dir)
 
-    for url, name, ext in helpers.get_media(url):
-        print(f"Downloading {name}.{ext}")
-        helpers.download_media(url, name, ext, download_dir)
+    for url, name in helpers.get_media(url):
+        print(f"Downloading {name}")
+        helpers.download_media(url, name, download_dir)
 
     print("All media downloaded.")
 
