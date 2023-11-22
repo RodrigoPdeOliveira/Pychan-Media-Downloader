@@ -6,17 +6,23 @@ def main():
     parser = argparse.ArgumentParser()
 
     url_group = parser.add_mutually_exclusive_group()
-    url_group.add_argument(
-        "-u", "--url", help="4Chan thread URL"
-    )
-    url_group.add_argument(
-        "-f", "--file", help="File with multiple urls"
+    url_group.add_argument("-u", "--url", help="4Chan thread URL")
+    url_group.add_argument("-f", "--file", help="File with multiple urls")
+
+    parser.add_argument(
+        "-o",
+        "--output",
+        help="Output path",
+        default="./downloads"
     )
 
     parser.add_argument(
-        "-o", "--output", help="Output path", default="./downloads"
+        "-e",
+        "--extension",
+        help="Download files with specified extensions",
+        default=None,
+        nargs="+"
     )
-    # TODO: Download image only or video only mode
 
     args = parser.parse_args()
 
@@ -26,19 +32,21 @@ def main():
     if args.file:
         with open(args.file, "r") as f:
             for url in f:
-                download(url, args.output)
+                download(url, args.output, args.extension)
     else:
-        download(args.url, args.output)
+        download(args.url, args.output, args.extension)
 
 
-def download(url: str, download_dir: str):
+def download(url: str, download_dir: str, accepted_ext: list[str] | None):
     download_dir += f"/{helpers.thread_name(url)}"
 
     helpers.check_dir(download_dir)
 
     for url, name in helpers.get_media(url):
-        print(f"Downloading {name}")
-        helpers.download_media(url, name, download_dir)
+        extension = name.split(".")[1]
+        if accepted_ext is None or extension in accepted_ext:
+            print(f"Downloading {name}")
+            helpers.download_media(url, name, download_dir)
 
     print("All media downloaded.")
 
