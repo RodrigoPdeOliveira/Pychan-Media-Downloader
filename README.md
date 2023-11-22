@@ -6,13 +6,14 @@ Download every media file found in a 4chan thread
 ## Usage/Examples
 
 ```
-$ python main.py [-h] [-u URL | -f FILE] [-o OUTPUT]
+$ python main.py [-h] [-u URL | -f FILE] [-o OUTPUT] [-e EXTENSION [EXTENSION ...]]
 
 options:
-  -h, --help            Show this help message and exit
-  -u, --url URL         4Chan thread URL
-  -f, --file FILE       File with multiple urls
-  -o, --output OUTPUT   Output path
+  -h, --help                                Show this help message and exit
+  -u, --url URL                             4Chan thread URL
+  -f, --file FILE                           File with multiple urls
+  -o, --output OUTPUT                       Output path
+  -e, --extension EXTENSION [EXTENSION ...] Filter extensions
 ```
 ### Download from one thread
 ```
@@ -33,4 +34,9 @@ https://boards.4channel.org/sci/thread/5942502
 ### Change output path
 ```
 $ python main.py -o ~/downloads -u https://boards.4channel.org/sci/thread/15828599
+```
+
+### Extension filter
+```
+$ python main.py -u https://boards.4channel.org/sci/thread/15828599 -e gif webm png
 ```
