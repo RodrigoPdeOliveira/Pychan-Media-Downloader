@@ -58,9 +58,8 @@ def thread_name(thread_url: str) -> str:
     response = requests.get(thread_url)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    subject = soup.find("span", attrs={"class": "subject"})
+    subject = soup.find("link", attrs={"rel": "canonical"})
 
-    if subject.text:
-        return subject.text
-    else:
-        return thread_url.split("/")[-1]
+    subject = str(subject.get("href"))
+
+    return subject.split("/")[-1]
